@@ -43,14 +43,22 @@ describe('Loggly Logger', function () {
     })
   })
 
-  describe('#logJSON', function () {
-    it('should process JSON log data', function (done) {
-      console.log('\naaaaaaaaaaaaaaaaaaaaaa')
 
-      let dummyData = {foo: 'bartest10'}
-    let asdf = _channel.sendToQueue('demo.pipe.logger', new Buffer(JSON.stringify(dummyData)))
-     console.log(asdf)
-      console.log('bbbbbbbbbbbbbbbbbbbbbb')
+  describe('#logJSON', function () {
+
+    it('handshake', function (done) {
+      this.timeout(5000)
+      logglyLogger.on('message', (msg) => {
+        if (msg.type === 'ready') done()
+      })
+    })
+
+    it('should process JSON log data', function (done) {
+
+      let dummyData = {foo: 'bartest11'}
+      _channel.sendToQueue('demo.pipe.logger', new Buffer(JSON.stringify(dummyData)))
+
+      done()
     })
   })
 })
