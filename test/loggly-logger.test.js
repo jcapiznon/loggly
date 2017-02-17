@@ -55,7 +55,7 @@ describe('Loggly Logger', function () {
 
     it('should process JSON log data', function (done) {
 
-      let dummyData = {foo: 'bartest11'}
+      let dummyData = {foo: 'bartest12'}
       _channel.sendToQueue('demo.pipe.logger', new Buffer(JSON.stringify(dummyData)))
 
       done()
