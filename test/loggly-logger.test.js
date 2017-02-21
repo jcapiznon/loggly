@@ -14,7 +14,7 @@ describe('Loggly Logger', function () {
     process.env.PORT = 8081
     process.env.INPUT_PIPE = 'demo.pipe.logger'
     process.env.BROKER = 'amqp://guest:guest@127.0.0.1/'
-    process.env.CONFIG = '{"token": "243cffd1-4d8b-4061-8aaf-02604f5fa26d", "subdomain":"jcapiznon", "tags":"tag10 tag11", "log_level":"info"}'
+    process.env.CONFIG = '{"token": "243cffd1-4d8b-4061-8aaf-02604f5fa26d", "subdomain":"jcapiznon", "tags":"reekohtest", "logLevel":"info"}'
 
 
     amqp.connect('amqp://guest:guest@127.0.0.1/')
@@ -45,7 +45,6 @@ describe('Loggly Logger', function () {
 
 
   describe('#logJSON', function () {
-
     it('handshake', function (done) {
       this.timeout(5000)
       logglyLogger.on('message', (msg) => {
@@ -54,8 +53,7 @@ describe('Loggly Logger', function () {
     })
 
     it('should process JSON log data', function (done) {
-
-      let dummyData = {foo: 'bartest12'}
+      let dummyData = {foo: 'reekohtest'}
       _channel.sendToQueue('demo.pipe.logger', new Buffer(JSON.stringify(dummyData)))
 
       done()

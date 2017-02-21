@@ -22,7 +22,7 @@ _plugin.on('log', (logData) => {
   d.run(function () {
     console.log('----d.run-----')
 
-    let logLevel = _plugin.config.log_level || 'info'
+    let logLevel = _plugin.config.logLevel || 'info'
 
     if (logData.level) {
       logLevel = logData.level
@@ -49,8 +49,7 @@ _plugin.on('log', (logData) => {
 _plugin.once('ready', () => {
 console.log('----ready-----')
   let tags = (isEmpty(_plugin.config.tags)) ? [] : _plugin.config.tags.split(' ')
-console.log(tags)
-  winston.add(winston.transports.Loggly, {
+    winston.add(winston.transports.Loggly, {
     token: _plugin.config.token,
     subdomain: _plugin.config.subdomain,
     tags: tags,
