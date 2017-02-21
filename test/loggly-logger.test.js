@@ -17,7 +17,7 @@ describe('Loggly Logger', function () {
     process.env.CONFIG = '{"token": "243cffd1-4d8b-4061-8aaf-02604f5fa26d", "subdomain":"jcapiznon", "tags":"reekohtest", "logLevel":"info"}'
 
 
-    amqp.connect('amqp://guest:guest@127.0.0.1/')
+    amqp.connect(process.env.BROKER)
       .then((conn) => {
         _conn = conn
         return conn.createChannel()
@@ -42,7 +42,6 @@ describe('Loggly Logger', function () {
       should.ok(logglyLogger = cp.fork(process.cwd()), 'Child process not spawned.')
     })
   })
-
 
   describe('#logJSON', function () {
     it('handshake', function (done) {
