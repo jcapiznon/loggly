@@ -43,9 +43,9 @@ describe('Loggly Logger', function () {
     })
   })
 
-  describe('#logJSON', function () {
-    it('handshake', function (done) {
-      this.timeout(5000)
+  describe('#handshake', function () {
+    it('should notify the parent process when ready within 8 second', function (done) {
+      this.timeout(8000)
       logglyLogger.on('message', (msg) => {
         if (msg.type === 'ready') done()
       })
