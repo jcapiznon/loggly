@@ -10,7 +10,6 @@ const isEmpty = require('lodash.isempty')
 require('winston-loggly')
 
 _plugin.on('log', (logData) => {
-  console.log('-log-')
   let d = domain.create()
 
   d.once('error', (error) => {
@@ -42,7 +41,6 @@ _plugin.on('log', (logData) => {
 })
 
 _plugin.once('ready', () => {
-  console.log('-ready-')
   let tags = (isEmpty(_plugin.config.tags)) ? [] : _plugin.config.tags.split(' ')
 
   winston.add(winston.transports.Loggly, {

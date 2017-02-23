@@ -14,7 +14,6 @@ describe('Loggly Logger', function () {
     process.env.BROKER = 'amqp://guest:guest@127.0.0.1/'
     process.env.CONFIG = '{"token": "243cffd1-4d8b-4061-8aaf-02604f5fa26d", "subdomain":"jcapiznon", "tags":"reekohtest", "logLevel":"info"}'
 
-
     amqp.connect(process.env.BROKER)
       .then((conn) => {
         _conn = conn
