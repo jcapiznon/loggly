@@ -10,11 +10,10 @@ const isEmpty = require('lodash.isempty')
 require('winston-loggly')
 
 _plugin.on('log', (logData) => {
-  console.log('-log-', logData)
+  console.log('-log-')
   let d = domain.create()
 
   d.once('error', (error) => {
-    console.log('-error-')
     console.error(error)
     _plugin.logException(error)
     d.exit()
@@ -27,8 +26,6 @@ _plugin.on('log', (logData) => {
       logLevel = logData.level
       delete logData.level
     }
-
-    console.log('-run-', logLevel, logData)
     winston.log(logLevel, logData, (error) => {
       if (error) {
         console.error('Error on Loggly.', error)
@@ -54,7 +51,6 @@ _plugin.once('ready', () => {
     tags: tags,
     json: true
   })
-  console.log(_plugin.config.token)
   _plugin.log('Loggly has been initialized.')
   _plugin.emit('init')
 })

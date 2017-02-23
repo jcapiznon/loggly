@@ -33,7 +33,6 @@ describe('Loggly Logger', function () {
 
   describe('#start', function () {
     it('should start the app', function (done) {
-      console.log('-test #start-')
       this.timeout(8000)
       _app = require('../app')
       _app.once('init', done)
@@ -42,13 +41,11 @@ describe('Loggly Logger', function () {
 
   describe('#log', function () {
    it('should log data', function (done) {
-     console.log('-test #log-')
      this.timeout(15000)
-      let dummyData = {foo: 'newreekohtest1'}
-      _channel.sendToQueue('demo.pipe.logger', new Buffer(JSON.stringify(dummyData)))
-     console.log('a')
-     setTimeout(done, 10000)
-      done()
+     let dummyData = {foo: 'reekohtestfinal2'}
+     _channel.sendToQueue('demo.pipe.logger', new Buffer(JSON.stringify(dummyData)))
+
+     setTimeout(done, 5000)
     })
   })
 })
