@@ -2,16 +2,14 @@
 
 const amqp = require('amqplib')
 
-let should = require('should')
-let cp = require('child_process')
+let _app = null
 let _channel = null
 let _conn = null
 
-let logglyLogger = null
-
 describe('Loggly Logger', function () {
+  this.slow(5000)
+
   before('init', () => {
-    process.env.PORT = 8081
     process.env.INPUT_PIPE = 'demo.pipe.logger'
     process.env.BROKER = 'amqp://guest:guest@127.0.0.1/'
     process.env.CONFIG = '{"token": "243cffd1-4d8b-4061-8aaf-02604f5fa26d", "subdomain":"jcapiznon", "tags":"reekohtest", "logLevel":"info"}'
@@ -29,32 +27,27 @@ describe('Loggly Logger', function () {
   })
 
   after('terminate child process', function (done) {
-    this.timeout(8000)
-
-    setTimeout(function () {
-      logglyLogger.kill('SIGKILL')
-      done()
-    }, 5000)
+    _conn.close()
+    done()
   })
 
-  describe('#spawn', function () {
-    it('should spawn a child process', function () {
-      should.ok(logglyLogger = cp.fork(process.cwd()), 'Child process not spawned.')
-    })
-  })
-
-  describe('#handshake', function () {
-    it('should notify the parent process when ready within 8 second', function (done) {
+  describe('#start', function () {
+    it('should start the app', function (done) {
+      console.log('-test #start-')
       this.timeout(8000)
-      logglyLogger.on('message', (msg) => {
-        if (msg.type === 'ready') done()
-      })
+      _app = require('../app')
+      _app.once('init', done)
     })
+  })
 
-    it('should process JSON log data', function (done) {
-      let dummyData = {foo: 'reekohtest'}
+  describe('#log', function () {
+   it('should log data', function (done) {
+     console.log('-test #log-')
+     this.timeout(15000)
+      let dummyData = {foo: 'newreekohtest1'}
       _channel.sendToQueue('demo.pipe.logger', new Buffer(JSON.stringify(dummyData)))
-
+     console.log('a')
+     setTimeout(done, 10000)
       done()
     })
   })
